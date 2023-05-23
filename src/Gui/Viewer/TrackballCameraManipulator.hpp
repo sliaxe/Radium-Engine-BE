@@ -9,82 +9,193 @@
 namespace Ra {
 namespace Gui {
 
-/// A Trackball manipulator for Cameras.
-class RA_GUI_API TrackballCameraManipulator
-    : public CameraManipulator,
-      public KeyMappingManageable<TrackballCameraManipulator>
+/**
+ * @class TrackballCameraManipulator
+ * A Trackball manipulator for Cameras.
+ */
+class TrackballCameraManipulator : public CameraManipulator,
+                                   public KeyMappingManageable<TrackballCameraManipulator>
 {
-    Q_OBJECT
-    friend class KeyMappingManageable<TrackballCameraManipulator>;
-
-  public:
-    using KeyMapping = KeyMappingManageable<TrackballCameraManipulator>;
-
-    /// Default constructor
+public:
+    /**
+     * Default constructor
+     */
     TrackballCameraManipulator();
 
-    /// Copy constructor used when switching camera manipulator
-    /// Requires that m_target is on the line of sight of the camera.
-    explicit TrackballCameraManipulator( const CameraManipulator& other );
+    /**
+     * Copy constructor used when switching camera manipulator
+     * Requires that m_target is on the line of sight of the camera.
+     * @param other The CameraManipulator object to copy from.
+     */
+    explicit TrackballCameraManipulator(const CameraManipulator& other);
 
-    /// Destructor.
+    /**
+     * Destructor.
+     */
     virtual ~TrackballCameraManipulator();
 
-    // KeyMappingManager::Context mappingContext();
-
-    bool handleMousePressEvent( QMouseEvent* event,
-                                const Qt::MouseButtons& buttons,
-                                const Qt::KeyboardModifiers& modifiers,
-                                int key ) override;
-    bool handleMouseReleaseEvent( QMouseEvent* event ) override;
-    bool handleMouseMoveEvent( QMouseEvent* event,
+    /**
+     * Handle mouse press event.
+     * @param event The QMouseEvent object representing the event.
+     * @param buttons The mouse buttons pressed during the event.
+     * @param modifiers The keyboard modifiers pressed during the event.
+     * @param key The key pressed during the event.
+     * @return True if the event was handled, false otherwise.
+     */
+    bool handleMousePressEvent(QMouseEvent* event,
                                const Qt::MouseButtons& buttons,
                                const Qt::KeyboardModifiers& modifiers,
-                               int key ) override;
-    bool handleWheelEvent( QWheelEvent* event,
-                           const Qt::MouseButtons& buttons,
-                           const Qt::KeyboardModifiers& modifiers,
-                           int key ) override;
+                               int key) override;
 
-    bool handleKeyPressEvent( QKeyEvent* event,
-                              const KeyMappingManager::KeyMappingAction& action ) override;
+    /**
+     * Handle mouse release event.
+     * @param event The QMouseEvent object representing the event.
+     * @return True if the event was handled, false otherwise.
+     */
+    bool handleMouseReleaseEvent(QMouseEvent* event) override;
 
+    /**
+     * Handle mouse move event.
+     * @param event The QMouseEvent object representing the event.
+     * @param buttons The mouse buttons pressed during the event.
+     * @param modifiers The keyboard modifiers pressed during the event.
+     * @param key The key pressed during the event.
+     * @return True if the event was handled, false otherwise.
+     */
+    bool handleMouseMoveEvent(QMouseEvent* event,
+                              const Qt::MouseButtons& buttons,
+                              const Qt::KeyboardModifiers& modifiers,
+                              int key) override;
+
+    /**
+     * Handle wheel event.
+     * @param event The QWheelEvent object representing the event.
+     * @param buttons The mouse buttons pressed during the event.
+     * @param modifiers The keyboard modifiers pressed during the event.
+     * @param key The key pressed during the event.
+     * @return True if the event was handled, false otherwise.
+     */
+    bool handleWheelEvent(QWheelEvent* event,
+                          const Qt::MouseButtons& buttons,
+                          const Qt::KeyboardModifiers& modifiers,
+                          int key) override;
+
+    /**
+     * Handle key press event.
+     * @param event The QKeyEvent object representing the event.
+     * @param action The KeyMappingManager::KeyMappingAction associated with the event.
+     * @return True if the event was handled, false otherwise.
+     */
+    bool handleKeyPressEvent(QKeyEvent* event,
+                             const KeyMappingManager::KeyMappingAction& action) override;
+
+    /**
+     * Toggle rotate around mode.
+     */
     void toggleRotateAround();
+
+    /**
+     * Update the camera.
+     */
     void updateCamera() override;
 
-    /// Set the distance from the camera to the target point.
-    /// update target m_referenceFrame.translation();
-    /// \note doesn't modify the camera.
-    void setTrackballRadius( Scalar rad );
+    /**
+     * Set the distance from the camera to the target point.
+     * @param rad The distance to set.
+     * @note This function does not modify the camera.
+     */
+    void setTrackballRadius(Scalar rad);
 
-    /// Return the distance from the camera to the target point.
+    /**
+     * Return the distance from the camera to the target point.
+     * @return The distance from the camera to the target point.
+     */
     Scalar getTrackballRadius() const;
 
-    /// Return the trackball center.
-    /// \note doesn't modify the camera.
+    /**
+     * Return the trackball center.
+     * @return The trackball center.
+     * @note This function does not modify the camera.
+     */
     const Core::Transform::ConstTranslationPart getTrackballCenter() const;
 
+    /**
+     * Get the mapping context for key mappings.
+     * @return The mapping context.
+     */
     KeyMappingManager::Context mappingContext() override;
 
-  public slots:
-    void setCameraPosition( const Core::Vector3& position ) override;
-    void setCameraTarget( const Core::Vector3& target ) override;
-    void fitScene( const Core::Aabb& aabb ) override;
+public slots:
+    /**
+     * Set the camera position.
+     * @param position The position to set.
+     */
+    void setCameraPosition(const Core::Vector3& position) override;
 
+    /**
+     * Set the camera target.
+     * @param target The target to set.
+     */
+    void setCameraTarget(const Core::Vector3& target) override;
+
+    /**
+     * Fit the scene based on the specified axis-aligned bounding box (AABB).
+     * @param aabb The AABB representing the scene.
+     */
+    void fitScene(const Core::Aabb& aabb) override;
+
+    /**
+     * Reset the camera.
+     */
     void resetCamera() override;
 
-  protected:
-    virtual void handleCameraRotate( Scalar dx, Scalar dy );
-    virtual void handleCameraPan( Scalar dx, Scalar dy );
-    virtual void handleCameraZoom( Scalar dx, Scalar dy );
-    virtual void handleCameraZoom( Scalar z );
-    virtual void handleCameraMoveForward( Scalar dx, Scalar dy );
-    virtual void handleCameraMoveForward( Scalar z );
+protected:
+    /**
+     * Handle camera rotation.
+     * @param dx The change in x-coordinate.
+     * @param dy The change in y-coordinate.
+     */
+    virtual void handleCameraRotate(Scalar dx, Scalar dy);
 
-    /// Update the polar coordinates of the Camera w.r.t. the trackball center.
+    /**
+     * Handle camera panning.
+     * @param dx The change in x-coordinate.
+     * @param dy The change in y-coordinate.
+     */
+    virtual void handleCameraPan(Scalar dx, Scalar dy);
+
+    /**
+     * Handle camera zooming.
+     * @param dx The change in x-coordinate.
+     * @param dy The change in y-coordinate.
+     */
+    virtual void handleCameraZoom(Scalar dx, Scalar dy);
+
+    /**
+     * Handle camera zooming.
+     * @param z The zoom value.
+     */
+    virtual void handleCameraZoom(Scalar z);
+
+    /**
+     * Handle moving the camera forward.
+     * @param dx The change in x-coordinate.
+     * @param dy The change in y-coordinate.
+     */
+    virtual void handleCameraMoveForward(Scalar dx, Scalar dy);
+
+    /**
+     * Handle moving the camera forward.
+     * @param z The movement distance.
+     */
+    virtual void handleCameraMoveForward(Scalar z);
+
+    /**
+     * Update the polar coordinates of the Camera with respect to the trackball center.
+     */
     void updatePhiTheta();
 
-  protected:
+protected:
     // the center of the trackball is defined by the m_referenceFrame.translation()
 
     /// Spherical coordinates   (ISO 80000-2:2019 convention)
@@ -105,18 +216,62 @@ class RA_GUI_API TrackballCameraManipulator
 
     KeyMappingCallbackManager m_keyMappingCallbackManager;
 
-  private:
+private:
+private:
+    /**
+     * Set up the key mapping callbacks.
+     */
     void setupKeyMappingCallbacks();
-    bool checkIntegrity( const std::string& mess ) const;
-    static void configureKeyMapping_impl();
-    void clampThetaPhi();
-    void rotateCallback( QEvent* event );
-    void panCallback( QEvent* event );
-    void moveForwardCallback( QEvent* event );
-    void zoomCallback( QEvent* event );
-    void mousePressSaveData( const QMouseEvent* mouseEvent );
 
-  protected:
+    /**
+     * Check the integrity of the camera manipulator.
+     * @param mess The error message to display if the integrity check fails.
+     * @return True if the integrity check passes, false otherwise.
+     */
+    bool checkIntegrity(const std::string& mess) const;
+
+    /**
+     * Configure the key mapping implementation.
+     */
+    static void configureKeyMapping_impl();
+
+    /**
+     * Clamp the theta and phi values within valid ranges.
+     */
+    void clampThetaPhi();
+
+    /**
+     * Callback function for rotation events.
+     * @param event The QEvent object representing the event.
+     */
+    void rotateCallback(QEvent* event);
+
+    /**
+     * Callback function for panning events.
+     * @param event The QEvent object representing the event.
+     */
+    void panCallback(QEvent* event);
+
+    /**
+     * Callback function for move forward events.
+     * @param event The QEvent object representing the event.
+     */
+    void moveForwardCallback(QEvent* event);
+
+    /**
+     * Callback function for zoom events.
+     * @param event The QEvent object representing the event.
+     */
+    void zoomCallback(QEvent* event);
+
+    /**
+     * Save mouse press data.
+     * @param mouseEvent The QMouseEvent object representing the event.
+     */
+    void mousePressSaveData(const QMouseEvent* mouseEvent);
+
+
+protected:
     ///\todo move CAMERA_ to CameraManipulator, will be done soon ;)
 #define KeyMappingCamera                      \
     KMA_VALUE( TRACKBALLCAMERA_ROTATE )       \
@@ -126,10 +281,11 @@ class RA_GUI_API TrackballCameraManipulator
     KMA_VALUE( TRACKBALLCAMERA_MOVE_FORWARD ) \
     KMA_VALUE( CAMERA_TOGGLE_QUICK )
 
-#define KMA_VALUE( XX ) static KeyMappingManager::KeyMappingAction XX;
+#define KMA_VALUE(XX) static KeyMappingManager::KeyMappingAction XX;
     KeyMappingCamera
 #undef KMA_VALUE
 };
+
 
 } // namespace Gui
 } // namespace Ra
