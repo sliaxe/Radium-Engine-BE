@@ -393,15 +393,15 @@ void TrackballCameraManipulator::fitScene( const Core::Aabb& aabb ) {
     }
 }
 
-void handleCameraRotateCalcul(Scalar* pdphi,Scalar* pdtheta,Scalar* pphi,Scalar* ptheta,Scalar dx,Scalar dy,Scalar m_cameraSensitivity,Scalar m_quickCameraModifier,Scalar m_phiDir,Scalar m_phi,Scalar m_theta){
-    // Calculate change in phi and theta angles based on input values and sensitivity modifiers
-    *pdphi   = m_phiDir * dx * m_cameraSensitivity * m_quickCameraModifier;
-    *pdtheta = -dy * m_cameraSensitivity * m_quickCameraModifier;
+// void handleCameraRotateCalcul(Scalar* pdphi,Scalar* pdtheta,Scalar* pphi,Scalar* ptheta,Scalar dx,Scalar dy,Scalar m_cameraSensitivity,Scalar m_quickCameraModifier,Scalar m_phiDir,Scalar m_phi,Scalar m_theta){
+//     // Calculate change in phi and theta angles based on input values and sensitivity modifiers
+//     *pdphi   = m_phiDir * dx * m_cameraSensitivity * m_quickCameraModifier;
+//     *pdtheta = -dy * m_cameraSensitivity * m_quickCameraModifier;
 
-    // Update phi and theta angles with change in angles
-    *pphi   = m_phi + (*pdphi);
-    *ptheta = m_theta + (*pdtheta);
-}
+//     // Update phi and theta angles with change in angles
+//     *pphi   = m_phi + (*pdphi);
+//     *ptheta = m_theta + (*pdtheta);
+// }
 
 
 void TrackballCameraManipulator::handleCameraRotate( Scalar dx, Scalar dy ) {
@@ -409,7 +409,7 @@ void TrackballCameraManipulator::handleCameraRotate( Scalar dx, Scalar dy ) {
     Scalar dphi,dtheta,phi,theta;
 
     // // Update phi and theta angles with change in angles
-    handleCameraRotateCalcul(&dphi,&dtheta,&phi,&theta,dx,dy,m_cameraSensitivity,m_quickCameraModifier,m_phiDir,m_phi,m_theta);
+    Core::Asset::handleCameraRotateCalcul(&dphi,&dtheta,&phi,&theta,dx,dy,m_cameraSensitivity,m_quickCameraModifier,m_phiDir,m_phi,m_theta);
 
     // Compute new direction vector of camera based on phi and theta angles using trigonometric functions
     Core::Vector3 dir { std::sin( phi ) * std::sin( theta ),
@@ -463,7 +463,7 @@ void handleCameraPanScalar( Scalar* px, Scalar* py,Scalar dx, Scalar dy,Scalar m
 void TrackballCameraManipulator::handleCameraPan( Scalar dx, Scalar dy ) {
     
     Scalar x,y;
-    handleCameraPanScalar( &x, &y , dx, dy,m_cameraSensitivity,m_quickCameraModifier,m_distFromCenter);;
+    Core::Asset::handleCameraPanScalar( &x, &y , dx, dy,m_cameraSensitivity,m_quickCameraModifier,m_distFromCenter);;
 
     // Compute camera right and up vectors
     Core::Vector3 R = -m_camera->getRightVector();
