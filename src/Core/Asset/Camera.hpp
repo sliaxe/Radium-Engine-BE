@@ -204,6 +204,8 @@ class RA_CORE_API Camera
     /// \param f : z far
     static Core::Matrix4 ortho( Scalar l, Scalar r, Scalar b, Scalar t, Scalar n, Scalar f );
 
+
+
   private:
     /// Camera frame (inverse of the view matrix).
     /// This represent the transformation from view space to world space.
@@ -232,6 +234,10 @@ class RA_CORE_API Camera
     Scalar m_ymag { 1_ra };
     ///@}
 };
+
+void handleCameraPanScalar( Scalar* px, Scalar* py, Scalar dx, Scalar dy,Scalar m_cameraSensitivity,Scalar m_quickCameraModifier,Scalar m_distFromCenter);
+
+void handleCameraRotateCalcul(Scalar* pdphi,Scalar* pdtheta,Scalar* pphi,Scalar* ptheta, Scalar dx, Scalar dy,Scalar m_cameraSensitivity,Scalar m_quickCameraModifier,Scalar m_phiDir,Scalar m_phi,Scalar m_theta);
 
 inline Core::Transform Camera::getFrame() const {
     return m_frame;

@@ -393,22 +393,28 @@ void TrackballCameraManipulator::fitScene( const Core::Aabb& aabb ) {
     }
 }
 
-void handleCameraRotateCalcul(Scalar* pdphi,Scalar* pdtheta,Scalar* pphi,Scalar* ptheta){
-    // Calculate change in phi and theta angles based on input values and sensitivity modifiers
-    *dphi   = m_phiDir * dx * m_cameraSensitivity * m_quickCameraModifier;
-    *dtheta = -dy * m_cameraSensitivity * m_quickCameraModifier;
+// void handleCameraRotateCalcul(Scalar* pdphi,Scalar* pdtheta,Scalar* pphi,Scalar* ptheta,Scalar dx,Scalar dy,Scalar m_cameraSensitivity,Scalar m_quickCameraModifier,Scalar m_phiDir,Scalar m_phi,Scalar m_theta){
+//     // Calculate change in phi and theta angles based on input values and sensitivity modifiers
+//     *pdphi   = m_phiDir * dx * m_cameraSensitivity * m_quickCameraModifier;
+//     *pdtheta = -dy * m_cameraSensitivity * m_quickCameraModifier;
 
-    // Update phi and theta angles with change in angles
-    *phi   = m_phi + (*dphi);
-    *theta = m_theta + (*dtheta);
-}
+//     // Update phi and theta angles with change in angles
+//     *pphi   = m_phi + (*pdphi);
+//     *ptheta = m_theta + (*pdtheta);
+// }
 
 
 void TrackballCameraManipulator::handleCameraRotate( Scalar dx, Scalar dy ) {
     // variables declaration
     Scalar dphi,dtheta,phi,theta;
 
-    handleCameraRotateCalcul(&dphi,&dtheta,&phi,&theta);
+    dphi   = m_phiDir * dx * m_cameraSensitivity * m_quickCameraModifier;
+    dtheta = -dy * m_cameraSensitivity * m_quickCameraModifier;
+
+    // Update phi and theta angles with change in angles
+    phi   = m_phi + dphi;
+    theta = m_theta + dtheta;
+    // handleCameraRotateCalcul(&dphi,&dtheta,&phi,&theta,dx,dy,m_cameraSensitivity,m_quickCameraModifier,m_phiDir,m_phi,m_theta);
 
     // Compute new direction vector of camera based on phi and theta angles using trigonometric functions
     Core::Vector3 dir { std::sin( phi ) * std::sin( theta ),
@@ -453,16 +459,18 @@ void TrackballCameraManipulator::handleCameraRotate( Scalar dx, Scalar dy ) {
     clampThetaPhi(); // This function ensures that the theta and phi angles are within their valid range
 }
 
-void TrackballCameraManipulator::handleCameraPanScalar( Scalar* px, Scalar* py){
-    // Calculate movement amount in x and y directions based on input values and sensitivity modifiers
-    *x = dx * m_cameraSensitivity * m_quickCameraModifier * m_distFromCenter * 0.1_ra;
-    *y = dy * m_cameraSensitivity * m_quickCameraModifier * m_distFromCenter * 0.1_ra;
-}
+// void TrackballCameraManipulator::handleCameraPanScalar( Scalar* px, Scalar* py,Scalar dx, Scalar dy,Scalar m_cameraSensitivity,Scalar m_quickCameraModifier,Scalar m_distFromCenter){
+//     // Calculate movement amount in x and y directions based on input values and sensitivity modifiers
+//     *px = dx * m_cameraSensitivity * m_quickCameraModifier * m_distFromCenter * 0.1_ra;
+//     *py = dy * m_cameraSensitivity * m_quickCameraModifier * m_distFromCenter * 0.1_ra;
+// }
 
 void TrackballCameraManipulator::handleCameraPan( Scalar dx, Scalar dy ) {
     
     Scalar x,y;
-    handleCameraPanScalar( &x, &y );
+    x = dx * m_cameraSensitivity * m_quickCameraModifier * m_distFromCenter * 0.1_ra;
+    y = dy * m_cameraSensitivity * m_quickCameraModifier * m_distFromCenter * 0.1_ra;
+    // handleCameraPanScalar( &x, &y , dx, dy,m_cameraSensitivity,m_quickCameraModifier,m_distFromCenter);;
 
     // Compute camera right and up vectors
     Core::Vector3 R = -m_camera->getRightVector();

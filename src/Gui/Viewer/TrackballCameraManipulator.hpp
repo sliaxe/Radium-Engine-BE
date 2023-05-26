@@ -13,13 +13,17 @@ namespace Gui {
  * @class TrackballCameraManipulator
  * A Trackball manipulator for Cameras.
  */
-class TrackballCameraManipulator : public CameraManipulator,
-                                   public KeyMappingManageable<TrackballCameraManipulator>
+class RA_GUI_API TrackballCameraManipulator
+    : public CameraManipulator,
+      public KeyMappingManageable<TrackballCameraManipulator>
 {
-public:
-    /**
-     * Default constructor
-     */
+    Q_OBJECT
+    friend class KeyMappingManageable<TrackballCameraManipulator>;
+
+  public:
+    using KeyMapping = KeyMappingManageable<TrackballCameraManipulator>;
+
+    /// Default constructor
     TrackballCameraManipulator();
 
     /**
@@ -216,7 +220,6 @@ protected:
 
     KeyMappingCallbackManager m_keyMappingCallbackManager;
 
-private:
 private:
     /**
      * Set up the key mapping callbacks.
