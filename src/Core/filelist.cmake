@@ -42,6 +42,7 @@ set(core_sources
     Utils/Color.cpp
     Utils/StackTrace.cpp
     Utils/StringUtils.cpp
+    Utils/Misc.cpp
 )
 
 set(core_headers
@@ -135,4 +136,5 @@ set(core_headers
     Utils/Timer.hpp
     Utils/TypesUtils.hpp
     Utils/Version.hpp
+    Utils/Misc.hpp
 )

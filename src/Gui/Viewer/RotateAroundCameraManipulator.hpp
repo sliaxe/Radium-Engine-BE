@@ -47,7 +47,6 @@ class RA_GUI_API RotateAroundCameraManipulator
     /// Compute the rotation of the camera from the mouse motion.
     /// Inspired by <a href="http://libqglviewer.com/">libQGLViewer</a>.
     Ra::Core::Quaternion deformedBallQuaternion( Scalar x, Scalar y, Scalar cx, Scalar cy );
-    Scalar projectOnBall( Scalar x, Scalar y );
 
   private:
     void setupKeyMappingCallbacks();
