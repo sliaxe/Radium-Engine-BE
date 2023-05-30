@@ -235,9 +235,11 @@ class RA_CORE_API Camera
     ///@}
 };
 
-void handleCameraPanScalar( Scalar* px, Scalar* py, Scalar dx, Scalar dy,Scalar m_cameraSensitivity,Scalar m_quickCameraModifier,Scalar m_distFromCenter);
+void handleCameraPanScalar( Scalar* px, Scalar* py, Scalar dx, Scalar dy,Scalar m_cameraSensitivity
+,Scalar m_quickCameraModifier,Scalar m_distFromCenter);
 
-void handleCameraRotateCalcul(Scalar* pdphi,Scalar* pdtheta,Scalar* pphi,Scalar* ptheta, Scalar dx, Scalar dy,Scalar m_cameraSensitivity,Scalar m_quickCameraModifier,Scalar m_phiDir,Scalar m_phi,Scalar m_theta);
+void handleCameraRotateCalcul(Scalar* pdphi,Scalar* pdtheta,Scalar* pphi,Scalar* ptheta, 
+Scalar dx, Scalar dy,Scalar m_cameraSensitivity,Scalar m_quickCameraModifier,Scalar m_phiDir,Scalar m_phi,Scalar m_theta);
 
 inline Core::Transform Camera::getFrame() const {
     return m_frame;

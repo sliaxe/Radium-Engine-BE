@@ -215,13 +215,17 @@ Core::Vector3 Camera::unProjectFromNDC( const Core::Vector3& ndc ) const {
     return getFrame() * ( unproj.head<3>() / unproj.w() );
 }
 
-void Core::Asset::handleCameraPanScalar( Scalar* px, Scalar* py, Scalar dx, Scalar dy,Scalar m_cameraSensitivity,Scalar m_quickCameraModifier,Scalar m_distFromCenter){
+void handleCameraPanScalar( Scalar* px, Scalar* py, Scalar dx, Scalar dy,
+Scalar m_cameraSensitivity,Scalar m_quickCameraModifier,Scalar m_distFromCenter){
+    
     // Calculate movement amount in x and y directions based on input values and sensitivity modifiers
     *px = dx * m_cameraSensitivity * m_quickCameraModifier * m_distFromCenter * 0.1_ra;
     *py = dy * m_cameraSensitivity * m_quickCameraModifier * m_distFromCenter * 0.1_ra;
 }
 
-void Core::Asset::handleCameraRotateCalcul(Scalar* pdphi,Scalar* pdtheta,Scalar* pphi,Scalar* ptheta, Scalar dx, Scalar dy,Scalar m_cameraSensitivity,Scalar m_quickCameraModifier,Scalar m_phiDir,Scalar m_phi,Scalar m_theta){
+void handleCameraRotateCalcul(Scalar* pdphi,Scalar* pdtheta,Scalar* pphi,Scalar* ptheta, Scalar dx, 
+Scalar dy,Scalar m_cameraSensitivity,Scalar m_quickCameraModifier,Scalar m_phiDir,Scalar m_phi,Scalar m_theta){
+
     // Calculate change in phi and theta angles based on input values and sensitivity modifiers
     *pdphi   = m_phiDir * dx * m_cameraSensitivity * m_quickCameraModifier;
     *pdtheta = -dy * m_cameraSensitivity * m_quickCameraModifier;
