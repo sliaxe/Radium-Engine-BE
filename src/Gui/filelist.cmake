@@ -6,6 +6,7 @@
 
 set(gui_sources
     AboutDialog/AboutDialog.cpp
+    AboutDialog/RadiumHelpDialog.cpp
     BaseApplication.cpp
     ParameterSetEditor/MaterialParameterEditor.cpp
     ParameterSetEditor/ParameterSetEditor.cpp
@@ -27,6 +28,7 @@ set(gui_sources
     Utils/PickingManager.cpp
     Viewer/CameraManipulator.cpp
     Viewer/FlightCameraManipulator.cpp
+    Viewer/CameraRecorder.cpp
     Viewer/Gizmo/Gizmo.cpp
     Viewer/Gizmo/GizmoManager.cpp
     Viewer/Gizmo/RotateGizmo.cpp
@@ -42,6 +44,7 @@ set(gui_sources
 
 set(gui_headers
     AboutDialog/AboutDialog.hpp
+    AboutDialog/RadiumHelpDialog.hpp
     BaseApplication.hpp
     MainWindowInterface.hpp
     ParameterSetEditor/MaterialParameterEditor.hpp
@@ -67,6 +70,7 @@ set(gui_headers
     Utils/PickingManager.hpp
     Utils/qt_utils.hpp
     Viewer/CameraManipulator.hpp
+    Viewer/CameraRecorder.hpp
     Viewer/FlightCameraManipulator.hpp
     Viewer/Gizmo/Gizmo.hpp
     Viewer/Gizmo/GizmoManager.hpp
@@ -84,13 +88,9 @@ set(gui_headers
     Widgets/VectorEditor.hpp
 )
 
-set(gui_inlines
-    Utils/KeyMappingManager.inl Viewer/WindowQt.inl Widgets/ConstrainedNumericSpinBox.inl
-    Widgets/ControlPanel.inl Widgets/VectorEditor.inl
-)
-
-set(gui_uis AboutDialog/AboutDialog.ui SkeletonBasedAnimation/SkeletonBasedAnimationUI.ui
-            Timeline/HelpDialog.ui Timeline/Timeline.ui
+set(gui_uis
+    AboutDialog/AboutDialog.ui AboutDialog/RadiumHelpDialog.ui
+    SkeletonBasedAnimation/SkeletonBasedAnimationUI.ui Timeline/HelpDialog.ui Timeline/Timeline.ui
 )
 
 set(gui_resources QtResources/RadiumQtResources.qrc

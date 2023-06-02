@@ -15,6 +15,7 @@ foreach(
     APP
     CoreExample
     CustomCameraManipulator
+    CameraRewind
     DrawPrimitives
     EntityAnimation
     EnvMap
